@@ -1,9 +1,15 @@
 #include "ScalarConverter.hpp"
 
 bool contains_only_digits(const std::string& str) {
-    for (size_t i = 0; i < str.length(); ++i) {
+    if (str.empty()) {
+        return false;
+    }
+    if (!std::isdigit(str[0]) && str[0] != '+' && str[0] != '-') {
+        return false;
+    }
+    for (size_t i = 1; i < str.length(); ++i) {
         if (!std::isdigit(str[i])) {
-            return false; 
+            return false;
         }
     }
     return true;
@@ -43,7 +49,8 @@ void ScalarConverter::convert(const std::string& str) {
         {
             std::cout << "char: Non displayable" << std::endl;
         }
-        std::cout << "int: " << int_number << std::endl;
+        int int_value = static_cast<int>(int_number);
+        std::cout << "int: " << int_value << std::endl;
         float float_value = static_cast<float>(int_number);
         std::cout << "float: " << std::fixed << std::setprecision(1) << float_value << "f" << std::endl;
         double double_value = static_cast<double>(int_number);
@@ -67,7 +74,8 @@ void ScalarConverter::convert(const std::string& str) {
         std::cout << "int: " << int_value << std::endl;
         float float_value = static_cast<float>(double_number);
         std::cout << "float: " << float_value << "f" <<std::endl;
-        std::cout << "double: " << double_number << std::endl;
+        double double_value = static_cast<double>(double_number);
+        std::cout << "double: " << double_value << std::endl;
     }
      else if(contains_no_letters_except_last(str) == true && std::count(str.begin(),str.end(),'.') == 1 
         && str[str.length() - 1] == 'f')
@@ -88,7 +96,8 @@ void ScalarConverter::convert(const std::string& str) {
         std::cout << "int: " << int_value << std::endl;
         double double_value = static_cast<double>(float_number);
         std::cout << "double: " << double_value << std::endl;
-        std::cout << "float: " << float_number << "f" << std::endl;
+        float float_value = static_cast<float>(float_number);
+        std::cout << "float: " << float_value << "f" << std::endl;
     }
     else if(str == "nan" || str == "nanf")
     {
@@ -111,4 +120,6 @@ void ScalarConverter::convert(const std::string& str) {
         std::cout << "float: +inff" << std::endl;
         std::cout << "double: +inf" << std::endl;
     }
+    else
+        std::cout << "string non valide" << std::endl; 
 }
